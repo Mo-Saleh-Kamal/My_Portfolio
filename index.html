@@ -1808,35 +1808,83 @@
       }
 
       /* =====================================================
-         REDUCED MOTION
-      ===================================================== */
+   SMOOTH SCROLL ANIMATIONS
+===================================================== */
 
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
+      .reveal,
+      .reveal-left,
+      .reveal-right,
+      .stagger > * {
+        opacity: 0;
+        will-change: opacity, transform;
+      }
 
-        /* نوقف الأنيميشن المستمر فقط */
-        .bg-lines span,
-        .hero-image-wrap::before,
-        .hero-image-wrap::after,
-        .hero .div-img .person,
-        .floating-text {
-          animation: none !important;
-        }
+      .reveal {
+        transform: translateY(60px);
+        transition:
+          opacity 0.9s ease,
+          transform 0.9s ease;
+      }
 
-        /*
-          مهم:
-          لا نخلي عناصر reveal مخفية.
-          الـ JavaScript سيضيف show عند ظهورها.
-        */
+      .reveal-left {
+        transform: translateX(-70px);
+        transition:
+          opacity 0.9s ease,
+          transform 0.9s ease;
+      }
 
-        .reveal,
-        .reveal-left,
-        .reveal-right,
-        .stagger > * {
-          transition: none !important;
-        }
+      .reveal-right {
+        transform: translateX(70px);
+        transition:
+          opacity 0.9s ease,
+          transform 0.9s ease;
+      }
+
+      .stagger > * {
+        transform: translateY(35px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+
+      /* لما العنصر يظهر */
+
+      .reveal.show,
+      .reveal-left.show,
+      .reveal-right.show {
+        opacity: 1;
+        transform: translate(0);
+      }
+
+      .stagger.show > * {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* تأخير العناصر */
+
+      .stagger.show > *:nth-child(1) {
+        transition-delay: 0.1s;
+      }
+
+      .stagger.show > *:nth-child(2) {
+        transition-delay: 0.2s;
+      }
+
+      .stagger.show > *:nth-child(3) {
+        transition-delay: 0.3s;
+      }
+
+      .stagger.show > *:nth-child(4) {
+        transition-delay: 0.4s;
+      }
+
+      .stagger.show > *:nth-child(5) {
+        transition-delay: 0.5s;
+      }
+
+      .stagger.show > *:nth-child(6) {
+        transition-delay: 0.6s;
       }
     </style>
   </head>
@@ -2179,8 +2227,8 @@
             </h3>
 
             <p>
-              A responsive project built to deliver a polished experience
-              across different screen sizes.
+              A responsive project built to deliver a polished experience across
+              different screen sizes.
             </p>
 
             <a href="#" class="btn">
@@ -2364,82 +2412,34 @@
          DESKTOP + TABLET + MOBILE
       ===================================================== */
 
+      /* =====================================================
+   SCROLL REVEAL ANIMATIONS
+===================================================== */
+
       const revealElements = document.querySelectorAll(
-        ".reveal, .reveal-left, .reveal-right, .stagger"
+        ".reveal, .reveal-left, .reveal-right, .stagger",
       );
 
-      function revealElement(element) {
-        element.classList.add("show");
-      }
-
-      /*
-        IntersectionObserver
-      */
-
-      if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver(
-          function (entries, observer) {
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) {
-                revealElement(entry.target);
-
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          {
-            threshold: 0.01,
-            rootMargin: "0px 0px -20px 0px",
-          }
-        );
-
-        revealElements.forEach(function (element) {
-          observer.observe(element);
-        });
-      }
-
-      /*
-        Fallback + دعم أفضل للموبايل
-      */
-
-      function checkRevealElements() {
-        revealElements.forEach(function (element) {
-          if (element.classList.contains("show")) {
-            return;
-          }
-
+      function revealOnScroll() {
+        revealElements.forEach((element) => {
           const rect = element.getBoundingClientRect();
 
-          if (
-            rect.top < window.innerHeight * 0.95 &&
-            rect.bottom > 0
-          ) {
-            revealElement(element);
+          if (rect.top < window.innerHeight * 0.9) {
+            element.classList.add("show");
           }
         });
       }
 
-      window.addEventListener("scroll", checkRevealElements, {
+      /* تشغيل أول مرة */
+      revealOnScroll();
+
+      /* تشغيل أثناء النزول */
+      window.addEventListener("scroll", revealOnScroll, {
         passive: true,
       });
 
-      window.addEventListener("resize", checkRevealElements);
-
-      window.addEventListener("orientationchange", function () {
-        setTimeout(checkRevealElements, 150);
-      });
-
-      /*
-        تشغيل مرة أولى
-      */
-
-      requestAnimationFrame(function () {
-        checkRevealElements();
-      });
-
-      setTimeout(checkRevealElements, 300);
-
-      setTimeout(checkRevealElements, 1000);
+      /* تشغيل عند تغيير حجم الشاشة */
+      window.addEventListener("resize", revealOnScroll);
 
       /* =====================================================
          CUSTOM CURSOR
@@ -2493,10 +2493,7 @@
         try {
           savedColors = JSON.parse(savedColors);
 
-          if (
-            !Array.isArray(savedColors) ||
-            savedColors.length === 0
-          ) {
+          if (!Array.isArray(savedColors) || savedColors.length === 0) {
             savedColors = defaultColors;
           }
         } catch (error) {
@@ -2504,16 +2501,13 @@
 
           localStorage.setItem(
             "portfolioColors",
-            JSON.stringify(defaultColors)
+            JSON.stringify(defaultColors),
           );
         }
       } else {
         savedColors = defaultColors;
 
-        localStorage.setItem(
-          "portfolioColors",
-          JSON.stringify(defaultColors)
-        );
+        localStorage.setItem("portfolioColors", JSON.stringify(defaultColors));
       }
 
       /* =====================================================
@@ -2559,10 +2553,7 @@
       ===================================================== */
 
       function changeColor(color) {
-        document.documentElement.style.setProperty(
-          "--main_color",
-          color
-        );
+        document.documentElement.style.setProperty("--main_color", color);
 
         localStorage.setItem("portfolioColor", color);
 
@@ -2574,15 +2565,12 @@
       ===================================================== */
 
       function updateSelectedColor() {
-        const currentColor =
-          localStorage.getItem("portfolioColor");
+        const currentColor = localStorage.getItem("portfolioColor");
 
-        const buttons =
-          document.querySelectorAll(".color-btn");
+        const buttons = document.querySelectorAll(".color-btn");
 
         buttons.forEach(function (button) {
-          const buttonColor =
-            button.style.getPropertyValue("--color");
+          const buttonColor = button.style.getPropertyValue("--color");
 
           if (buttonColor === currentColor) {
             button.classList.add("selected");
@@ -2596,24 +2584,17 @@
          LOAD SAVED COLOR
       ===================================================== */
 
-      const savedColor =
-        localStorage.getItem("portfolioColor");
+      const savedColor = localStorage.getItem("portfolioColor");
 
       if (savedColor) {
-        document.documentElement.style.setProperty(
-          "--main_color",
-          savedColor
-        );
+        document.documentElement.style.setProperty("--main_color", savedColor);
       } else {
         document.documentElement.style.setProperty(
           "--main_color",
-          savedColors[0]
+          savedColors[0],
         );
 
-        localStorage.setItem(
-          "portfolioColor",
-          savedColors[0]
-        );
+        localStorage.setItem("portfolioColor", savedColors[0]);
       }
 
       /* =====================================================
@@ -2627,8 +2608,7 @@
       ===================================================== */
 
       document.addEventListener("click", function (event) {
-        const switcher =
-          document.querySelector(".color-switcher");
+        const switcher = document.querySelector(".color-switcher");
 
         if (!switcher.contains(event.target)) {
           colorOptions.classList.remove("active");
