@@ -1894,6 +1894,145 @@
       .stagger.show > *:nth-child(6) {
         transition-delay: 0.6s;
       }
+
+      /* =========================================
+   DARK / LIGHT MODE
+========================================= */
+
+      .theme-toggle {
+        width: 42px;
+        height: 42px;
+
+        border-radius: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: transparent;
+        border: 1px solid var(--main_color);
+
+        color: var(--main_color);
+
+        font-size: 18px;
+
+        cursor: pointer;
+
+        transition: 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        background: var(--main_color);
+        color: #111;
+        transform: rotate(20deg) scale(1.08);
+        box-shadow: 0 0 20px rgba(201, 243, 29, 0.25);
+      }
+
+      /* LIGHT MODE */
+
+      body.light-mode {
+        background: #f5f5f5;
+        color: #111;
+      }
+
+      /* النصوص */
+
+      body.light-mode h1,
+      body.light-mode h2,
+      body.light-mode h3,
+      body.light-mode h4,
+      body.light-mode h5,
+      body.light-mode h6 {
+        color: #111;
+      }
+
+      body.light-mode p {
+        color: #555;
+      }
+
+      /* HEADER */
+
+      body.light-mode header.active {
+        background: rgba(255, 255, 255, 0.92);
+        border-bottom-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* الروابط */
+
+      body.light-mode header nav .links a {
+        color: #111;
+      }
+
+      body.light-mode header nav .links a:hover {
+        color: var(--main_color);
+      }
+
+      /* ABOUT */
+
+      body.light-mode .about .container {
+        background: #ffffff;
+        border-color: rgba(0, 0, 0, 0.08);
+      }
+
+      /* SKILLS */
+
+      body.light-mode .about .div-text ul li {
+        background: #eeeeee;
+        color: #111;
+      }
+
+      /* SERVICES */
+
+      body.light-mode .services .boxs .box {
+        background: #ffffff;
+        border-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* PROJECTS */
+
+      body.light-mode .projects .project_box img {
+        border-color: rgba(0, 0, 0, 0.1);
+      }
+
+      body.light-mode .projects .project_box .text h3 a {
+        color: #111;
+      }
+
+      /* CONTACT */
+
+      body.light-mode .contact .social-contact .links a {
+        color: #111;
+      }
+
+      /* INPUTS */
+
+      body.light-mode .contact form .inpts-form input,
+      body.light-mode .contact form .inpts-form textarea {
+        background: #ffffff;
+        color: #111;
+        border-color: rgba(0, 0, 0, 0.12);
+      }
+
+      /* COLOR SWITCHER */
+
+      body.light-mode .color-toggle {
+        background: #ffffff;
+      }
+
+      body.light-mode .color-options {
+        background: rgba(255, 255, 255, 0.95);
+        border-color: rgba(0, 0, 0, 0.1);
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 600px) {
+        .theme-toggle {
+          width: 36px;
+          height: 36px;
+          font-size: 16px;
+        }
+      }
     </style>
   </head>
 
@@ -2002,6 +2141,9 @@
             <i class="fa-brands fa-linkedin"></i>
           </a>
 
+          <button class="theme-toggle" id="themeToggle">
+            <i class="fa-solid fa-sun"></i>
+          </button>
           <span class="icon_menu" onclick="open_close_menu()">
             <i class="fa-solid fa-bars"></i>
           </span>
@@ -2675,6 +2817,42 @@ ${message}
         window.open(whatsappURL, "_blank");
 
         contactForm.reset();
+      });
+
+      /* =========================================
+   DARK / LIGHT MODE
+========================================= */
+
+      const themeToggle = document.getElementById("themeToggle");
+      const themeIcon = themeToggle.querySelector("i");
+
+      // Load saved theme
+      const savedTheme = localStorage.getItem("theme");
+
+      if (savedTheme === "light") {
+        document.body.classList.add("light-mode");
+
+        themeIcon.classList.remove("fa-sun");
+        themeIcon.classList.add("fa-moon");
+      }
+
+      // Toggle theme
+      themeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("light-mode");
+
+        const isLight = document.body.classList.contains("light-mode");
+
+        if (isLight) {
+          localStorage.setItem("theme", "light");
+
+          themeIcon.classList.remove("fa-sun");
+          themeIcon.classList.add("fa-moon");
+        } else {
+          localStorage.setItem("theme", "dark");
+
+          themeIcon.classList.remove("fa-moon");
+          themeIcon.classList.add("fa-sun");
+        }
       });
     </script>
   </body>
