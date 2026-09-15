@@ -967,6 +967,7 @@
         line-height: 45px;
 
         border-radius: 8px;
+        font-size: 22px;
       }
 
       .contact .social-contact .links a:hover {
@@ -2322,17 +2323,18 @@
             </a>
 
             <a
-              href="https://www.instagram.com/mohammedsaleh14447/"
+              href="https://wa.me/+201550767324"
               target="_blank"
               rel="noopener"
             >
-              <i class="fa-brands fa-instagram"></i>
-              Instagram
+              <i class="fa-brands fa-whatsapp"></i>
+              WhatsApp
             </a>
           </div>
         </div>
 
-        <form class="reveal-right">
+        <!-- <form class="reveal-right">
+
           <div class="inpts-form">
             <input type="text" placeholder="Full Name" />
 
@@ -2343,6 +2345,27 @@
             <input type="text" placeholder="Subject" />
 
             <textarea rows="10" placeholder="Your Message Here...."></textarea>
+          </div>
+
+          <button class="btn" type="submit">Send Message</button>
+        </form> -->
+
+        <form class="reveal-right" id="contactForm">
+          <div class="inpts-form">
+            <input type="text" id="fullName" placeholder="Full Name" required />
+
+            <input type="email" id="email" placeholder="Email" required />
+
+            <input type="text" id="phone" placeholder="Phone Number" required />
+
+            <input type="text" id="subject" placeholder="Subject" required />
+
+            <textarea
+              id="message"
+              rows="10"
+              placeholder="Your Message Here...."
+              required
+            ></textarea>
           </div>
 
           <button class="btn" type="submit">Send Message</button>
@@ -2613,6 +2636,38 @@
         if (!switcher.contains(event.target)) {
           colorOptions.classList.remove("active");
         }
+      });
+
+      const contactForm = document.getElementById("contactForm");
+
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("fullName").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const subject = document.getElementById("subject").value;
+        const message = document.getElementById("message").value;
+
+        const myWhatsApp = "201550767324";
+
+        const whatsappMessage = `
+Hello Mohamed 👋
+
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Subject: ${subject}
+
+Message:
+${message}
+`;
+
+        const whatsappURL = `https://wa.me/${myWhatsApp}?text=${encodeURIComponent(whatsappMessage)}`;
+
+        window.open(whatsappURL, "_blank");
+
+        contactForm.reset();
       });
     </script>
   </body>
