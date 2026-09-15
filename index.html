@@ -1,18 +1,13 @@
-
-
-
-
-
-
-
-
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mohamed Saleh | Portfolio</title>
+
+    <title>Mohamed Saleh | Front-End Developer</title>
+
     <link rel="shortcut icon" href="img/logo_icon.png" type="image/x-icon" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
@@ -20,8 +15,15 @@
       referrerpolicy="no-referrer"
     />
 
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;700&display=swap");
+      /* =====================================================
+         RESET
+      ===================================================== */
 
       * {
         margin: 0;
@@ -40,24 +42,35 @@
         --main_color: #c9f31d;
         --p_color: #8a8a8a;
         --bg_color: #1f1f1f;
-        --white_color: #fff;
+        --white_color: #ffffff;
         --black_color: #070707;
+        --card_color: #111111;
         --border-color: rgba(255, 255, 255, 0.1);
       }
 
       body {
         background: #131313;
+        color: white;
         overflow-x: hidden;
       }
 
-      .container {
-        width: min(90%, 1500px);
-        margin: auto;
+      body.menu-open {
+        overflow: hidden;
       }
 
       img {
         max-width: 100%;
         display: block;
+      }
+
+      button,
+      input,
+      textarea {
+        font-family: inherit;
+      }
+
+      button {
+        border: none;
       }
 
       h1,
@@ -70,13 +83,22 @@
         font-family: "DM Sans", sans-serif;
       }
 
+      p {
+        color: var(--p_color);
+      }
+
       span {
         color: var(--main_color);
       }
 
-      p {
-        color: var(--p_color);
+      .container {
+        width: min(90%, 1500px);
+        margin: auto;
       }
+
+      /* =====================================================
+         BUTTONS
+      ===================================================== */
 
       .btns {
         display: flex;
@@ -85,17 +107,22 @@
       }
 
       .btn {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
         background: var(--main_color);
         padding: 14px 30px;
         border-radius: 10px;
         text-transform: capitalize;
         color: var(--black_color);
-        transition: 0.3s;
+        font-weight: 700;
+        transition: 0.3s ease;
       }
 
       .btn:hover {
-        transform: scale(1.05);
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(201, 243, 29, 0.2);
       }
 
       .btn-no-bg {
@@ -109,33 +136,63 @@
         color: var(--main_color);
       }
 
+      /* =====================================================
+         HEADER
+      ===================================================== */
+
       header {
         position: fixed;
         top: 0;
         left: 0;
-        right: 0;
+        width: 100%;
         height: 90px;
         z-index: 1000;
-        transition: 0.3s;
+        transition: 0.3s ease;
       }
 
       header.active {
-        background: var(--black_color);
-        border-bottom: 1px solid #56565697;
+        background: rgba(7, 7, 7, 0.92);
+        backdrop-filter: blur(15px);
+        border-bottom: 1px solid var(--border-color);
       }
 
       header nav {
         height: 100%;
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
+        position: relative;
       }
 
-      header nav > a img {
-        width: 200px;
+      /* LOGO */
+
+      .logo-svg {
+        width: 190px;
+        height: 55px;
+        display: block;
+        flex-shrink: 0;
       }
+
+      .logo-svg svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .logo-ms {
+        fill: var(--main_color);
+        font-size: 48px;
+        font-weight: 900;
+        font-family: "DM Sans", sans-serif;
+      }
+
+      /* NAV LINKS */
 
       header nav .links {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+
         display: flex;
         align-items: center;
         gap: 30px;
@@ -144,7 +201,20 @@
       header nav .links a {
         color: var(--white_color);
         text-transform: capitalize;
-        font-size: 18px;
+        font-size: 17px;
+        font-weight: 500;
+        position: relative;
+        transition: 0.3s;
+      }
+
+      header nav .links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 0;
+        height: 2px;
+        background: var(--main_color);
         transition: 0.3s;
       }
 
@@ -152,27 +222,37 @@
         color: var(--main_color);
       }
 
+      header nav .links a:hover::after {
+        width: 100%;
+      }
+
+      /* SOCIAL */
+
       header nav .icons {
+        margin-left: auto;
         display: flex;
         align-items: center;
-        gap: 25px;
+        gap: 20px;
       }
 
       header nav .icons a {
         color: var(--main_color);
-        font-size: 25px;
+        font-size: 22px;
         transition: 0.3s;
       }
 
       header nav .icons a:hover {
-        transform: scale(1.2);
+        transform: translateY(-3px) scale(1.1);
       }
 
-      .close_menu,
       .icon_menu,
-      header .links .logo {
+      .close_menu {
         display: none;
       }
+
+      /* =====================================================
+         BACKGROUND LINES
+      ===================================================== */
 
       .bg-lines span {
         position: fixed;
@@ -180,8 +260,8 @@
         z-index: -1;
         height: 100%;
         width: 1px;
-        background: rgba(225, 225, 225, 0.07);
-        animation: left-Right 18s infinite;
+        background: rgba(225, 225, 225, 0.055);
+        animation: leftRight 18s infinite;
       }
 
       .bg-lines span:nth-child(1) {
@@ -220,26 +300,27 @@
         left: 90%;
       }
 
-      @keyframes left-Right {
-        0% {
+      @keyframes leftRight {
+        0%,
+        100% {
           transform: translateX(0);
         }
 
         50% {
           transform: translateX(-100px);
         }
-
-        100% {
-          transform: translateX(0);
-        }
       }
+
+      /* =====================================================
+         SCROLL REVEAL
+      ===================================================== */
 
       .reveal {
         opacity: 0;
-        transform: translateY(70px);
+        transform: translateY(60px);
         transition:
-          opacity 0.9s ease,
-          transform 0.9s ease;
+          opacity 0.8s ease,
+          transform 0.8s ease;
       }
 
       .reveal.show {
@@ -249,10 +330,10 @@
 
       .reveal-left {
         opacity: 0;
-        transform: translateX(-80px);
+        transform: translateX(-70px);
         transition:
-          opacity 0.9s ease,
-          transform 0.9s ease;
+          opacity 0.8s ease,
+          transform 0.8s ease;
       }
 
       .reveal-left.show {
@@ -262,10 +343,10 @@
 
       .reveal-right {
         opacity: 0;
-        transform: translateX(80px);
+        transform: translateX(70px);
         transition:
-          opacity 0.9s ease,
-          transform 0.9s ease;
+          opacity 0.8s ease,
+          transform 0.8s ease;
       }
 
       .reveal-right.show {
@@ -275,10 +356,10 @@
 
       .stagger > * {
         opacity: 0;
-        transform: translateY(50px);
+        transform: translateY(35px);
         transition:
-          opacity 0.7s ease,
-          transform 0.7s ease;
+          opacity 0.6s ease,
+          transform 0.6s ease;
       }
 
       .stagger.show > * {
@@ -291,80 +372,75 @@
       }
 
       .stagger.show > *:nth-child(2) {
-        transition-delay: 0.25s;
+        transition-delay: 0.2s;
       }
 
       .stagger.show > *:nth-child(3) {
-        transition-delay: 0.4s;
+        transition-delay: 0.3s;
       }
 
       .stagger.show > *:nth-child(4) {
-        transition-delay: 0.55s;
+        transition-delay: 0.4s;
       }
 
       .stagger.show > *:nth-child(5) {
-        transition-delay: 0.7s;
+        transition-delay: 0.5s;
       }
 
       .stagger.show > *:nth-child(6) {
-        transition-delay: 0.85s;
+        transition-delay: 0.6s;
       }
 
-      /* ================= HERO ================= */
+      /* =====================================================
+         HERO
+      ===================================================== */
 
       .hero {
         min-height: 100vh;
-        padding-top: 130px;
+        padding: 130px 0 80px;
         display: flex;
         align-items: center;
-        margin-bottom: 120px;
       }
 
       .hero .container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 60px;
+        gap: 70px;
       }
 
       .hero .div-text {
         width: 55%;
+        animation: heroText 1s ease forwards;
       }
 
       .hero .div-text h4 {
         color: var(--p_color);
-        font-size: 35px;
+        font-size: clamp(22px, 3vw, 35px);
         margin-bottom: 15px;
       }
 
       .hero .div-text h1 {
-        font-size: clamp(45px, 5vw, 70px);
+        font-size: clamp(45px, 5.5vw, 75px);
+        line-height: 1.05;
       }
 
       .hero .div-text p {
         margin: 30px 0;
-        font-size: 18px;
-        width: 90%;
-        line-height: 1.7;
+        font-size: 17px;
+        line-height: 1.8;
+        max-width: 750px;
       }
 
       .hero .btn {
-        font-size: 20px;
-        padding: 18px 50px;
-      }
-
-      .hero .div-text {
-        animation: heroText 1s ease forwards;
-      }
-
-      .hero .div-img {
-        animation: heroImage 1.2s ease forwards;
+        font-size: 18px;
+        padding: 16px 40px;
       }
 
       @keyframes heroText {
         from {
           opacity: 0;
-          transform: translateX(-80px);
+          transform: translateX(-70px);
         }
 
         to {
@@ -376,7 +452,7 @@
       @keyframes heroImage {
         from {
           opacity: 0;
-          transform: translateX(80px) scale(0.9);
+          transform: translateX(70px) scale(0.9);
         }
 
         to {
@@ -385,87 +461,98 @@
         }
       }
 
-      /* wrapper جديد للـ Hero فقط */
+      /* =====================================================
+         HERO IMAGE
+      ===================================================== */
+
       .hero-image-wrap {
-        width: 40%;
-        max-width: 550px;
-        position: relative;
-        margin: 0 auto;
-        overflow: visible;
-      }
+        width: 45%;
+        max-width: 540px;
+        height: 540px;
 
-      /* الخلفية والصورة فقط داخل المنطقة المقصوصة */
-      .hero .div-img {
-        width: 100%;
-        max-width: none;
         position: relative;
+
         display: flex;
+        align-items: center;
         justify-content: center;
-        align-items: flex-end;
-        margin: 0;
-        border-radius: 0 0 600px 600px;
-        overflow: hidden;
+
+        animation: heroImage 1.2s ease forwards;
       }
 
-      .hero .div-img::before {
+      .hero-image-wrap::before {
         content: "";
         position: absolute;
-        width: 72%;
-        aspect-ratio: 1;
-        background: radial-gradient(
-          circle,
-          rgba(201, 243, 29, 0.22),
-          transparent 68%
-        );
-        filter: blur(10px);
-        bottom: 8%;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: -1;
+        inset: 15px;
+        border: none;
+        border-radius: 50%;
+        border: 5px solid var(--main_color);
+        background: var(--main_color);
+        animation: rotate 15s linear infinite;
+        opacity: 0.6;
       }
 
-      .hero .div-img .bg-img {
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 100%;
-        height: auto;
-        transform: translateX(-50%);
-        display: block;
-        z-index: 0;
+
+
+      .hero .div-img {
+        width: 370px;
+        height: 470px;
+
+        position: relative;
+        z-index: 2;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+
+        overflow: hidden;
+        border-radius: 20px;
       }
 
       .hero .div-img .person {
-        position: relative;
-        z-index: 1;
         width: 100%;
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto;
+        height: 100%;
+
         object-fit: contain;
-        object-position: center bottom;
+        object-position: bottom center;
+
+        position: relative;
+        z-index: 2;
+
+        filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
       }
 
-      /* الكلام أصبح خارج الخلفية */
+      /* =====================================================
+         FLOATING LABELS
+      ===================================================== */
+
       .floating-text {
         position: absolute;
         z-index: 10;
+
         display: flex;
         align-items: center;
         gap: 8px;
+
         padding: 10px 16px;
-        background: rgba(18, 18, 18, 0.88);
-        border: 1px solid rgba(201, 243, 29, 0.45);
-        color: #fff;
+
+        background: rgba(18, 18, 18, 0.9);
+        border: 1px solid var(--main_color);
+
+        color: white;
+
         font-size: 14px;
         font-weight: 700;
+
         border-radius: 50px;
+
         backdrop-filter: blur(12px);
+
         box-shadow:
           0 10px 30px rgba(0, 0, 0, 0.4),
-          0 0 25px rgba(201, 243, 29, 0.12);
+          0 0 20px rgba(201, 243, 29, 0.12);
+
         white-space: nowrap;
+
         animation: floating 4s ease-in-out infinite;
       }
 
@@ -475,46 +562,55 @@
       }
 
       .text-1 {
-        top: 15%;
-        left: -75px;
+        top: 13%;
+        left: -45px;
       }
 
       .text-2 {
         top: 48%;
-        right: -85px;
+        right: -45px;
         animation-delay: 1.2s;
       }
 
       .text-3 {
-        bottom: 13%;
-        left: -55px;
+        bottom: 10%;
+        left: -25px;
         animation-delay: 2.2s;
       }
 
       @keyframes floating {
         0%,
         100% {
-          transform: translateY(0) rotate(0);
+          transform: translateY(0);
         }
 
         50% {
-          transform: translateY(-14px) rotate(2deg);
+          transform: translateY(-12px);
         }
       }
 
+      /* =====================================================
+         ABOUT
+      ===================================================== */
+
       .about {
-        padding: 50px 0;
+        padding: 80px 0;
       }
 
       .about .container {
         background: var(--black_color);
+
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         gap: 60px;
-        padding: 60px;
-        margin-bottom: 70px;
-        border-radius: 15px;
+
+        padding: 65px;
+
+        border-radius: 20px;
+
+        border: 1px solid rgba(255, 255, 255, 0.04);
       }
 
       .about .div-text {
@@ -528,8 +624,9 @@
       }
 
       .about .div-text h2 {
-        font-size: clamp(30px, 4vw, 45px);
+        font-size: clamp(30px, 4vw, 48px);
         margin: 25px 0;
+        line-height: 1.2;
       }
 
       .about .div-text p {
@@ -541,27 +638,34 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
         margin: 30px 0;
-        padding: 0;
       }
 
       .about .div-text ul li {
         width: 100%;
+
         font-weight: bold;
+
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
+
         background: #1d2930;
-        padding: 14px 15px;
+
+        padding: 14px;
+
         border-radius: 8px;
+
         transition: 0.3s;
+
         cursor: pointer;
-        color: #fff;
+
+        color: white;
       }
 
       .about .div-text ul li:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.12);
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.08);
       }
 
       .about .div-text ul li i {
@@ -592,21 +696,20 @@
         color: #61dafb;
       }
 
-      .about .div-text .btn {
-        margin-top: 10px;
-      }
-
       .about-img {
         width: 40%;
-        display: flex;
-        justify-content: center;
       }
 
       .about-img img {
         width: 100%;
         max-width: 500px;
+        margin: auto;
         border-radius: 15px;
       }
+
+      /* =====================================================
+         SECTION TITLE
+      ===================================================== */
 
       .top-section {
         text-align: center;
@@ -614,38 +717,51 @@
       }
 
       .top-section h2 {
-        font-size: clamp(25px, 3vw, 35px);
+        font-size: clamp(28px, 4vw, 40px);
       }
 
+      /* =====================================================
+         SERVICES
+      ===================================================== */
+
       .services {
-        padding: 80px 0;
+        padding: 100px 0;
       }
 
       .services .boxs {
         width: min(90%, 1500px);
         margin: auto;
+
         display: grid;
         grid-template-columns: repeat(3, 1fr);
+
         gap: 30px;
       }
 
       .services .boxs .box {
         width: 100%;
+
         text-align: center;
+
         padding: 50px 30px;
+
         border: 1px solid var(--border-color);
-        border-radius: 10px;
-        transition: 0.3s ease-in-out;
+
+        border-radius: 15px;
+
+        transition: 0.3s ease;
+        background: rgba(255, 255, 255, 0.01);
       }
 
       .services .boxs .box:hover {
         border-color: var(--main_color);
         transform: translateY(-8px);
+        background: rgba(201, 243, 29, 0.02);
       }
 
       .services .boxs .box i {
         color: var(--main_color);
-        font-size: 65px;
+        font-size: 60px;
         margin-bottom: 30px;
         transition: 0.3s;
       }
@@ -655,15 +771,19 @@
       }
 
       .services .boxs .box h3 {
-        font-size: 24px;
+        font-size: 23px;
         margin-bottom: 20px;
       }
 
       .services .boxs .box p {
         font-size: 15px;
-        margin-bottom: 40px;
+        margin-bottom: 35px;
         line-height: 1.7;
       }
+
+      /* =====================================================
+         PROJECTS
+      ===================================================== */
 
       .projects {
         padding: 100px 0;
@@ -673,8 +793,10 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
         gap: 70px;
-        margin-bottom: 100px;
+
+        margin-bottom: 110px;
       }
 
       .projects .project_box.project-box2 {
@@ -683,7 +805,17 @@
 
       .projects .project_box img {
         width: 48%;
-        border-radius: 12px;
+
+        border-radius: 15px;
+
+        border: 1px solid var(--border-color);
+
+        transition: 0.4s ease;
+      }
+
+      .projects .project_box img:hover {
+        transform: scale(1.02);
+        border-color: var(--main_color);
       }
 
       .projects .project_box .text {
@@ -691,13 +823,13 @@
       }
 
       .projects .project_box .text h4 {
-        font-size: 20px;
-        margin-bottom: 20px;
+        font-size: 18px;
+        margin-bottom: 18px;
         font-weight: normal;
       }
 
       .projects .project_box .text h3 a {
-        font-size: clamp(25px, 3vw, 40px);
+        font-size: clamp(27px, 3vw, 42px);
         color: var(--white_color);
         transition: 0.3s;
       }
@@ -707,7 +839,7 @@
       }
 
       .projects .project_box .text p {
-        margin: 30px 0 50px;
+        margin: 25px 0 40px;
         line-height: 1.8;
       }
 
@@ -715,15 +847,19 @@
         transform: rotate(45deg);
       }
 
+      /* =====================================================
+         CONTACT
+      ===================================================== */
+
       .contact {
-        padding: 100px 0;
+        padding: 100px 0 130px;
       }
 
       .contact .container {
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 60px;
+        gap: 70px;
       }
 
       .contact .social-contact {
@@ -733,36 +869,54 @@
       .contact .social-contact h2 {
         color: var(--white_color);
         margin-bottom: 40px;
+        font-size: 30px;
       }
 
       .contact .social-contact .links {
         display: flex;
         flex-direction: column;
+        gap: 5px;
       }
 
       .contact .social-contact .links a {
         color: var(--white_color);
-        font-size: 18px;
-        margin-bottom: 25px;
+
+        font-size: 16px;
+
+        margin-bottom: 20px;
+
         position: relative;
         left: 0;
+
+        display: flex;
+        align-items: center;
+
         transition: 0.3s;
+
         word-break: break-word;
       }
 
       .contact .social-contact .links a i {
         color: var(--bg_color);
-        margin-right: 8px;
+
+        margin-right: 12px;
+
         background: var(--main_color);
+
         width: 45px;
+        min-width: 45px;
+
         height: 45px;
+
         text-align: center;
         line-height: 45px;
-        border-radius: 5px;
+
+        border-radius: 8px;
       }
 
       .contact .social-contact .links a:hover {
-        left: 10px;
+        left: 8px;
+        color: var(--main_color);
       }
 
       .contact form {
@@ -772,20 +926,37 @@
 
       .contact form .inpts-form {
         width: 100%;
+
         display: flex;
         flex-wrap: wrap;
+
         justify-content: space-between;
       }
 
       .contact form .inpts-form input,
       .contact form .inpts-form textarea {
-        border-radius: 5px;
-        padding: 20px;
+        border-radius: 8px;
+
+        padding: 18px;
+
         outline: none;
+
         background-color: var(--bg_color);
+
         color: white;
-        margin-bottom: 20px;
+
+        margin-bottom: 18px;
+
         border: 1px solid var(--border-color);
+
+        font-size: 15px;
+
+        transition: 0.3s;
+      }
+
+      .contact form .inpts-form input::placeholder,
+      .contact form .inpts-form textarea::placeholder {
+        color: #777;
       }
 
       .contact form .inpts-form input {
@@ -795,11 +966,13 @@
       .contact form .inpts-form textarea {
         width: 100%;
         resize: vertical;
+        min-height: 180px;
       }
 
       .contact form .inpts-form input:focus,
       .contact form .inpts-form textarea:focus {
         border-color: var(--main_color);
+        box-shadow: 0 0 15px rgba(201, 243, 29, 0.08);
       }
 
       .contact .btn {
@@ -809,7 +982,143 @@
         cursor: pointer;
       }
 
-      @media (max-width: 1000px) {
+      /* =====================================================
+         COLOR SWITCHER
+      ===================================================== */
+
+      .color-switcher {
+        position: fixed;
+
+        right: 20px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        z-index: 9999;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      .color-toggle {
+        width: 50px;
+        height: 50px;
+
+        border: 1px solid var(--main_color);
+        border-radius: 50%;
+
+        background: #181818;
+
+        color: var(--main_color);
+
+        font-size: 20px;
+
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        transition: 0.3s;
+      }
+
+      .color-toggle:hover {
+        transform: rotate(20deg) scale(1.08);
+        box-shadow: 0 0 20px var(--main_color);
+      }
+
+      .color-options {
+        margin-top: 10px;
+
+        padding: 10px;
+
+        background: rgba(20, 20, 20, 0.95);
+
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        border-radius: 30px;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 10px;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transform: translateX(20px);
+
+        transition: 0.3s ease;
+      }
+
+      .color-options.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+      }
+
+      .color-btn {
+        width: 30px;
+        height: 30px;
+
+        border: 2px solid transparent;
+        border-radius: 50%;
+
+        background: var(--color);
+
+        cursor: pointer;
+
+        transition: 0.3s;
+      }
+
+      .color-btn:hover {
+        transform: scale(1.2);
+
+        border-color: white;
+
+        box-shadow: 0 0 15px var(--color);
+      }
+
+      /* =====================================================
+         CURSOR
+      ===================================================== */
+
+      .cursor-dot,
+      .cursor-circle {
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        border-radius: 50%;
+
+        pointer-events: none;
+      }
+
+      .cursor-dot {
+        width: 6px;
+        height: 6px;
+
+        background: var(--main_color);
+
+        z-index: 99999;
+      }
+
+      .cursor-circle {
+        width: 40px;
+        height: 40px;
+
+        border: 1px solid var(--main_color);
+
+        z-index: 99998;
+      }
+
+      /* =====================================================
+         TABLET
+      ===================================================== */
+
+      @media (max-width: 1100px) {
         .container {
           width: 90%;
         }
@@ -818,22 +1127,32 @@
           height: 80px;
         }
 
-        header nav > a img {
-          width: 160px;
-        }
-
         header nav .links {
           position: fixed;
+
           top: 0;
           left: -100%;
+
+          transform: none;
+
           width: 350px;
+          max-width: 85%;
+
           height: 100vh;
-          background: var(--black_color);
+
+          background: rgba(7, 7, 7, 0.98);
+
+          backdrop-filter: blur(15px);
+
           flex-direction: column;
           justify-content: center;
-          gap: 25px;
+
+          gap: 28px;
+
           border-right: 1px solid var(--border-color);
-          transition: 0.3s;
+
+          transition: 0.4s ease;
+
           z-index: 1001;
         }
 
@@ -841,35 +1160,43 @@
           left: 0;
         }
 
-        header .links .logo {
-          display: block;
-          margin-bottom: 20px;
-        }
-
-        header .links .logo img {
-          width: 160px;
+        header nav .links a {
+          font-size: 20px;
         }
 
         .close_menu {
-          display: block;
+          display: flex;
+
           position: absolute;
+
           top: 25px;
           right: 25px;
+
+          width: 40px;
+          height: 40px;
+
+          align-items: center;
+          justify-content: center;
+
           color: white;
-          font-size: 25px;
+
+          font-size: 24px;
+
           cursor: pointer;
         }
 
         .icon_menu {
           display: block;
+
           color: var(--main_color);
-          font-size: 25px;
+
+          font-size: 24px;
+
           cursor: pointer;
         }
 
         .hero {
           padding-top: 120px;
-          margin-bottom: 70px;
         }
 
         .hero .container {
@@ -891,19 +1218,13 @@
           justify-content: center;
         }
 
-        /* Hero فقط */
         .hero-image-wrap {
-          width: 60%;
-          max-width: 500px;
-        }
-
-        .hero .div-img {
-          width: 100%;
-          max-width: none;
+          width: 600px;
+          max-width: 85%;
         }
 
         .about .container {
-          padding: 40px;
+          padding: 45px;
           flex-direction: column;
         }
 
@@ -921,11 +1242,11 @@
 
         .projects .project_box,
         .projects .project_box.project-box2 {
-          gap: 40px;
+          gap: 45px;
         }
 
         .projects .project_box .text h3 a {
-          font-size: 28px;
+          font-size: 30px;
         }
 
         .contact .container {
@@ -944,6 +1265,10 @@
         }
       }
 
+      /* =====================================================
+         MOBILE
+      ===================================================== */
+
       @media (max-width: 600px) {
         .container {
           width: 92%;
@@ -953,113 +1278,155 @@
           height: 70px;
         }
 
-        header nav > a img {
-          width: 135px;
+        header nav .logo-svg {
+          width: 125px;
+          height: 48px;
         }
 
         header nav .icons {
-          gap: 12px;
+          gap: 13px;
         }
 
         header nav .icons a {
-          font-size: 19px;
+          font-size: 18px;
         }
 
         .icon_menu {
           font-size: 22px;
         }
 
+        /* Hide some social icons on small screens */
+
+        header nav .icons a:nth-child(1),
+        header nav .icons a:nth-child(3) {
+          display: none;
+        }
+
         header nav .links {
           width: 100%;
+          max-width: 100%;
         }
+
+        /* HERO */
 
         .hero {
           min-height: auto;
-          padding-top: 110px;
-          margin-bottom: 60px;
+
+          padding: 105px 0 50px;
         }
 
         .hero .container {
-          gap: 40px;
+          gap: 45px;
         }
 
         .hero .div-text h4 {
-          font-size: 22px;
+          font-size: 21px;
+          margin-bottom: 12px;
         }
 
         .hero .div-text h1 {
-          font-size: clamp(36px, 11vw, 48px);
-          line-height: 1.1;
+          font-size: clamp(38px, 11vw, 52px);
+          line-height: 1.05;
         }
 
         .hero .div-text p {
           font-size: 14px;
           line-height: 1.8;
-          width: 100%;
+
+          margin: 22px auto;
+
+          max-width: 500px;
         }
 
         .hero .btns {
           flex-direction: column;
-          gap: 15px;
+
+          gap: 14px;
         }
 
         .hero .btn {
+          width: 100%;
+          max-width: 240px;
+
           font-size: 15px;
-          padding: 13px 28px;
+
+          padding: 13px 25px;
         }
 
-        /* Hero فقط */
+        /* HERO IMAGE */
+
         .hero-image-wrap {
-          width: 85%;
-          max-width: 400px;
+          width: 100%;
+          max-width: 360px;
+
+          height: 390px;
+        }
+
+        .hero-image-wrap::before {
+          width: 290px;
+          height: 290px;
+        }
+
+        .hero-image-wrap::after {
+          width: 315px;
+          height: 315px;
         }
 
         .hero .div-img {
-          width: 100%;
-          max-width: none;
+          width: 260px;
+          height: 350px;
         }
 
+        /* FLOATING */
+
         .floating-text {
-          font-size: 11px;
-          padding: 7px 11px;
+          font-size: 10px;
+
+          padding: 7px 10px;
+
           gap: 5px;
         }
 
         .floating-text i {
-          font-size: 14px;
+          font-size: 13px;
         }
 
         .text-1 {
-          top: 13%;
-          left: -25px;
+          top: 10%;
+          left: 0;
         }
 
         .text-2 {
-          top: 46%;
-          right: -25px;
+          top: 45%;
+          right: 0;
         }
 
         .text-3 {
-          bottom: 10%;
-          left: -15px;
+          bottom: 7%;
+          left: 5px;
         }
 
+        /* ABOUT */
+
         .about {
-          padding: 30px 0;
+          padding: 45px 0;
         }
 
         .about .container {
-          padding: 25px 18px;
+          padding: 28px 18px;
           gap: 35px;
+          border-radius: 15px;
         }
 
         .about .div-text h5 {
-          font-size: 16px;
+          font-size: 15px;
         }
 
         .about .div-text h2 {
           font-size: 28px;
           line-height: 1.3;
+
+          margin: 18px 0;
         }
 
         .about .div-text p {
@@ -1070,18 +1437,20 @@
         .about .div-text ul {
           grid-template-columns: 1fr;
           gap: 10px;
+
+          margin: 25px 0;
         }
 
         .about .div-text ul li {
           padding: 12px;
-          font-size: 15px;
+          font-size: 14px;
         }
 
         .about .div-text ul li i {
-          font-size: 25px;
+          font-size: 24px;
         }
 
-        .about .div-text .btn {
+        .about .btn {
           font-size: 14px;
           padding: 12px 22px;
         }
@@ -1091,16 +1460,20 @@
         }
 
         .about-img img {
-          width: 85%;
+          width: 90%;
         }
+
+        /* SECTION TITLE */
 
         .top-section {
           margin-bottom: 40px;
         }
 
         .top-section h2 {
-          font-size: 25px;
+          font-size: 26px;
         }
+
+        /* SERVICES */
 
         .services {
           padding: 60px 0;
@@ -1109,15 +1482,15 @@
         .services .boxs {
           width: 92%;
           grid-template-columns: 1fr;
-          gap: 20px;
+          gap: 18px;
         }
 
         .services .boxs .box {
-          padding: 40px 20px;
+          padding: 38px 20px;
         }
 
         .services .boxs .box i {
-          font-size: 55px;
+          font-size: 52px;
         }
 
         .services .boxs .box h3 {
@@ -1126,17 +1499,28 @@
 
         .services .boxs .box p {
           font-size: 14px;
+          line-height: 1.8;
+          margin-bottom: 28px;
         }
 
+        .services .boxs .box .btn {
+          font-size: 14px;
+          padding: 12px 22px;
+        }
+
+        /* PROJECTS */
+
         .projects {
-          padding: 60px 0;
+          padding: 65px 0;
         }
 
         .projects .project_box,
         .projects .project_box.project-box2 {
           flex-direction: column;
+
           gap: 25px;
-          margin-bottom: 70px;
+
+          margin-bottom: 75px;
         }
 
         .projects .project_box img,
@@ -1144,18 +1528,25 @@
           width: 100%;
         }
 
+        .projects .project_box img {
+          border-radius: 12px;
+        }
+
         .projects .project_box .text h4 {
-          font-size: 16px;
-          margin-bottom: 12px;
+          font-size: 15px;
+          margin-bottom: 10px;
         }
 
         .projects .project_box .text h3 a {
           font-size: 25px;
+          line-height: 1.2;
         }
 
         .projects .project_box .text p {
           font-size: 14px;
-          margin: 20px 0 30px;
+
+          margin: 18px 0 28px;
+
           line-height: 1.8;
         }
 
@@ -1164,29 +1555,34 @@
           padding: 12px 22px;
         }
 
+        /* CONTACT */
+
         .contact {
-          padding: 60px 0;
+          padding: 60px 0 80px;
         }
 
         .contact .social-contact h2 {
           font-size: 25px;
-          margin-bottom: 30px;
+          margin-bottom: 28px;
         }
 
         .contact .social-contact .links {
           display: flex;
           flex-direction: column;
+          gap: 0;
         }
 
         .contact .social-contact .links a {
           width: 100%;
-          font-size: 14px;
+          font-size: 13px;
         }
 
         .contact .social-contact .links a i {
           width: 38px;
+          min-width: 38px;
           height: 38px;
           line-height: 38px;
+          margin-right: 10px;
         }
 
         .contact form {
@@ -1200,75 +1596,141 @@
         .contact form .inpts-form input,
         .contact form .inpts-form textarea {
           width: 100%;
-          padding: 15px;
+
+          padding: 14px;
+
           font-size: 14px;
+        }
+
+        .contact form .inpts-form textarea {
+          min-height: 150px;
         }
 
         .contact .btn {
+          width: 100%;
+          max-width: 250px;
+
           font-size: 14px;
-          padding: 13px 25px;
+          padding: 13px 20px;
         }
 
+        /* COLOR SWITCHER */
+
+        .color-switcher {
+          right: 10px;
+        }
+
+        .color-toggle {
+          width: 42px;
+          height: 42px;
+          font-size: 17px;
+        }
+
+        .color-btn {
+          width: 25px;
+          height: 25px;
+        }
+
+        .color-options {
+          padding: 8px;
+          gap: 8px;
+        }
+
+        /* ANIMATIONS */
+
         .reveal-left {
-          transform: translateX(-50px);
+          transform: translateX(-40px);
         }
 
         .reveal-right {
-          transform: translateX(50px);
+          transform: translateX(40px);
         }
 
         .reveal {
-          transform: translateY(45px);
+          transform: translateY(40px);
         }
 
         .stagger > * {
-          transform: translateY(35px);
+          transform: translateY(30px);
         }
       }
 
+      /* =====================================================
+         VERY SMALL PHONES
+      ===================================================== */
+
       @media (max-width: 380px) {
-        header nav > a img {
-          width: 120px;
+        .container {
+          width: 94%;
+        }
+
+        header nav .logo-svg {
+          width: 110px;
+        }
+
+        header nav .icons {
+          gap: 10px;
         }
 
         header nav .icons a {
-          font-size: 17px;
+          font-size: 16px;
+        }
+
+        .icon_menu {
+          font-size: 20px;
+        }
+
+        .hero {
+          padding-top: 100px;
         }
 
         .hero .div-text h1 {
           font-size: 34px;
         }
 
-        /* Hero فقط */
+        .hero .div-text p {
+          font-size: 13px;
+        }
+
         .hero-image-wrap {
-          width: 90%;
-          max-width: 350px;
+          height: 350px;
+          max-width: 330px;
+        }
+
+        .hero-image-wrap::before {
+          width: 250px;
+          height: 250px;
+        }
+
+        .hero-image-wrap::after {
+          width: 275px;
+          height: 275px;
         }
 
         .hero .div-img {
-          width: 100%;
-          max-width: none;
+          width: 230px;
+          height: 315px;
         }
 
         .floating-text {
-          font-size: 10px;
-          padding: 6px 9px;
+          font-size: 9px;
+          padding: 6px 8px;
         }
 
         .text-1 {
-          left: -15px;
+          left: 0;
         }
 
         .text-2 {
-          right: -15px;
+          right: 0;
         }
 
         .text-3 {
-          left: -10px;
+          left: 0;
         }
 
         .about .container {
-          padding: 20px 14px;
+          padding: 22px 14px;
         }
 
         .about .div-text h2 {
@@ -1276,54 +1738,191 @@
         }
 
         .services .boxs .box {
-          padding: 35px 15px;
+          padding: 32px 15px;
+        }
+
+        .projects .project_box .text h3 a {
+          font-size: 23px;
         }
       }
 
+      /* =====================================================
+         TOUCH DEVICES
+      ===================================================== */
 
+      @media (hover: none) and (pointer: coarse) {
+        body {
+          cursor: auto;
+        }
+
+        .cursor-dot,
+        .cursor-circle {
+          display: none;
+        }
+      }
+
+      /* =====================================================
+         REDUCED MOTION
+      ===================================================== */
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        .reveal,
+        .reveal-left,
+        .reveal-right,
+        .stagger > * {
+          opacity: 1;
+          transform: none;
+        }
+      }
     </style>
   </head>
 
   <body>
+    <!-- =====================================================
+         BACKGROUND
+    ===================================================== -->
+
     <div class="bg-lines">
-      <span></span><span></span><span></span><span></span><span></span
-      ><span></span><span></span><span></span><span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
+
+    <!-- CUSTOM CURSOR -->
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-circle"></div>
+
+    <!-- =====================================================
+         COLOR SWITCHER
+    ===================================================== -->
+
+    <div class="color-switcher">
+      <button class="color-toggle" onclick="toggleColors()">
+        <i class="fa-solid fa-palette"></i>
+      </button>
+
+      <div class="color-options" id="colorOptions">
+        <button
+          class="color-btn"
+          style="--color: #c9f31d"
+          onclick="changeColor('#c9f31d')"
+        ></button>
+
+        <button
+          class="color-btn"
+          style="--color: #00bfff"
+          onclick="changeColor('#00bfff')"
+        ></button>
+
+        <button
+          class="color-btn"
+          style="--color: #a855f7"
+          onclick="changeColor('#a855f7')"
+        ></button>
+
+        <button
+          class="color-btn"
+          style="--color: #ff4757"
+          onclick="changeColor('#ff4757')"
+        ></button>
+
+        <button
+          class="color-btn"
+          style="--color: #ff9f43"
+          onclick="changeColor('#ff9f43')"
+        ></button>
+
+        <button
+          class="color-btn"
+          style="--color: #00cec9"
+          onclick="changeColor('#00cec9')"
+        ></button>
+      </div>
+    </div>
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
 
     <header>
       <nav class="container">
-        <a href="#"><img src="img/logo.png" alt="Logo" /></a>
+        <!-- LOGO -->
+
+        <a href="#home" class="logo-svg">
+          <svg viewBox="0 0 180 55" xmlns="http://www.w3.org/2000/svg">
+            <text x="0" y="42" class="logo-ms">MS</text>
+          </svg>
+        </a>
+
+        <!-- NAVIGATION -->
 
         <div class="links" id="links">
           <span class="close_menu" onclick="open_close_menu()">
             <i class="fa-solid fa-xmark"></i>
           </span>
 
-          <a href="#" class="logo">
-            <img src="img/logo.png" alt="Logo" />
-          </a>
+          <a href="#home" onclick="open_close_menu()">Home</a>
 
-          <a href="#home">Home</a>
           <a href="#about" onclick="open_close_menu()">About</a>
+
           <a href="#services" onclick="open_close_menu()">Services</a>
+
           <a href="#projects" onclick="open_close_menu()">Projects</a>
+
           <a href="#contact" onclick="open_close_menu()">Contact</a>
         </div>
 
+        <!-- SOCIAL -->
+
         <div class="icons">
-          <a href="https://facebook.com/share/1YuRiyBq1K">
+          <a
+            href="https://facebook.com/share/1YuRiyBq1K"
+            target="_blank"
+            rel="noopener"
+          >
             <i class="fa-brands fa-facebook"></i>
           </a>
 
-          <a href="https://github.com/settings/profile">
+          <a
+            href="https://github.com/settings/profile"
+            target="_blank"
+            rel="noopener"
+          >
             <i class="fa-brands fa-github"></i>
           </a>
 
-          <a href="https://www.instagram.com/mohammedsaleh14447/">
+          <a
+            href="https://www.instagram.com/mohammedsaleh14447/"
+            target="_blank"
+            rel="noopener"
+          >
             <i class="fa-brands fa-instagram"></i>
           </a>
 
-          <a href="https://www.linkedin.com/in/mohammed-saleh-029478373/">
+          <a
+            href="https://www.linkedin.com/in/mohammed-saleh-029478373/"
+            target="_blank"
+            rel="noopener"
+          >
             <i class="fa-brands fa-linkedin"></i>
           </a>
 
@@ -1334,11 +1933,12 @@
       </nav>
     </header>
 
-    <!-- ================= HERO ================= -->
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
 
-    <div class="hero" id="home">
+    <section class="hero" id="home">
       <div class="container">
-
         <div class="div-text">
           <h4>Hello, I'm</h4>
 
@@ -1355,29 +1955,23 @@
           </p>
 
           <div class="btns">
-            <a href="#" class="btn">hire me</a>
-            <a href="#" class="btn-no-bg">Download Resume</a>
+            <a href="#contact" class="btn"> Hire Me </a>
+
+            <a href="#" class="btn-no-bg"> Download Resume </a>
           </div>
         </div>
 
-        <!-- التعديل هنا فقط -->
-        <div class="hero-image-wrap">
+        <!-- HERO IMAGE -->
 
+        <div class="hero-image-wrap">
           <div class="div-img">
             <img
               class="person"
               src="img/photo_2026-09-13_00-31-54-removebg-preview.png"
               alt="Mohamed Saleh"
             />
-
-            <img
-              class="bg-img"
-              src="img/bg_img_home.png"
-              alt=""
-            />
           </div>
 
-          <!-- الكلام برا الخلفية -->
           <div class="floating-text text-1">
             <i class="fa-brands fa-react"></i>
             React
@@ -1392,15 +1986,18 @@
             <i class="fa-solid fa-bolt"></i>
             Creative
           </div>
-
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- =====================================================
+         ABOUT
+    ===================================================== -->
 
     <section class="about reveal" id="about">
       <div class="container">
         <div class="div-text reveal-left">
-          <h5>about me</h5>
+          <h5>About Me</h5>
 
           <h2>
             <span>I'm a Frontend Web Developer</span>
@@ -1432,7 +2029,7 @@
 
             <li>
               <i id="d" class="fa-brands fa-tailwind-css"></i>
-              Tailwindcss
+              Tailwind CSS
             </li>
 
             <li>
@@ -1446,26 +2043,26 @@
             </li>
           </ul>
 
-          <a href="#" download class="btn">
-            Download CV
-          </a>
+          <a href="#" download class="btn"> Download CV </a>
         </div>
 
         <div class="about-img reveal-right">
           <img
             src="img/photo_2026-09-13_01-15-53.jpg"
-            alt=""
+            alt="About Mohamed Saleh"
           />
         </div>
       </div>
     </section>
 
+    <!-- =====================================================
+         SERVICES
+    ===================================================== -->
+
     <section class="services" id="services">
       <div class="container">
         <div class="top-section reveal">
-          <h2>
-            Our <span>Services</span>
-          </h2>
+          <h2>Our <span>Services</span></h2>
         </div>
       </div>
 
@@ -1480,7 +2077,7 @@
             devices.
           </p>
 
-          <a href="#" class="btn">Read More</a>
+          <a href="#contact" class="btn"> Read More </a>
         </div>
 
         <div class="box">
@@ -1493,7 +2090,7 @@
             desktop.
           </p>
 
-          <a href="#" class="btn">Read More</a>
+          <a href="#contact" class="btn"> Read More </a>
         </div>
 
         <div class="box">
@@ -1502,26 +2099,29 @@
           <h3>Front-End Development</h3>
 
           <p>
-            I make websites look great and work perfectly on mobile, tablet, and
-            desktop.
+            I create interactive and modern front-end interfaces using modern
+            web technologies.
           </p>
 
-          <a href="#" class="btn">Read More</a>
+          <a href="#contact" class="btn"> Read More </a>
         </div>
       </div>
     </section>
 
+    <!-- =====================================================
+         PROJECTS
+    ===================================================== -->
+
     <section class="projects" id="projects">
       <div class="container">
-
         <div class="top-section reveal">
-          <h2>
-            Explore my Popular <span>Projects</span>
-          </h2>
+          <h2>Explore my Popular <span>Projects</span></h2>
         </div>
 
+        <!-- PROJECT 1 -->
+
         <div class="project_box reveal-left">
-          <img src="img/project1.jpg" alt="" />
+          <img src="img/project1.jpg" alt="Project One" />
 
           <div class="text">
             <h4>
@@ -1529,7 +2129,7 @@
             </h4>
 
             <h3>
-              <a href="#">Website Makeup Design</a>
+              <a href="#"> Website Makeup Design </a>
             </h3>
 
             <p>
@@ -1538,14 +2138,16 @@
             </p>
 
             <a href="#" class="btn">
-              View live
+              View Live
               <i class="fa-solid fa-arrow-up"></i>
             </a>
           </div>
         </div>
 
+        <!-- PROJECT 2 -->
+
         <div class="project_box project-box2 reveal-right">
-          <img src="img/project2.jpg" alt="" />
+          <img src="img/project2.jpg" alt="Project Two" />
 
           <div class="text">
             <h4>
@@ -1553,23 +2155,25 @@
             </h4>
 
             <h3>
-              <a href="#">Creative Website Design</a>
+              <a href="#"> Creative Website Design </a>
             </h3>
 
             <p>
-              A responsive project built to deliver a polished experience
-              across different screen sizes.
+              A responsive project built to deliver a polished experience across
+              different screen sizes.
             </p>
 
             <a href="#" class="btn">
-              View live
+              View Live
               <i class="fa-solid fa-arrow-up"></i>
             </a>
           </div>
         </div>
 
+        <!-- PROJECT 3 -->
+
         <div class="project_box reveal-left">
-          <img src="img/project3.jpg" alt="" />
+          <img src="img/project3.jpg" alt="Project Three" />
 
           <div class="text">
             <h4>
@@ -1577,7 +2181,7 @@
             </h4>
 
             <h3>
-              <a href="#">Modern Web Experience</a>
+              <a href="#"> Modern Web Experience </a>
             </h3>
 
             <p>
@@ -1586,14 +2190,16 @@
             </p>
 
             <a href="#" class="btn">
-              View live
+              View Live
               <i class="fa-solid fa-arrow-up"></i>
             </a>
           </div>
         </div>
 
+        <!-- PROJECT 4 -->
+
         <div class="project_box project-box2 reveal-right">
-          <img src="img/project4.jpg" alt="" />
+          <img src="img/project4.jpg" alt="Project Four" />
 
           <div class="text">
             <h4>
@@ -1601,7 +2207,7 @@
             </h4>
 
             <h3>
-              <a href="#">Professional Landing Page</a>
+              <a href="#"> Professional Landing Page </a>
             </h3>
 
             <p>
@@ -1610,114 +2216,133 @@
             </p>
 
             <a href="#" class="btn">
-              View live
+              View Live
               <i class="fa-solid fa-arrow-up"></i>
             </a>
           </div>
         </div>
-
       </div>
     </section>
 
-    <section class="contact" id="contact">
+    <!-- =====================================================
+         CONTACT
+    ===================================================== -->
 
+    <section class="contact" id="contact">
       <div class="top-section reveal">
-        <h2>
-          Contact <span>Me</span>
-        </h2>
+        <h2>Contact <span>Me</span></h2>
       </div>
 
       <div class="container">
-
         <div class="social-contact reveal-left">
-          <h2>Follow me</h2>
+          <h2>Follow Me</h2>
 
           <div class="links stagger">
-
             <a href="mailto:mohammedsaleh14447@gmail.com">
               <i class="fa-solid fa-envelope"></i>
+
               mohammedsaleh14447@gmail.com
             </a>
 
             <a href="tel:+201550767324">
               <i class="fa-solid fa-phone"></i>
+
               01550767324
             </a>
 
-            <a href="https://facebook.com/" target="_blank">
+            <a href="https://facebook.com/" target="_blank" rel="noopener">
               <i class="fa-brands fa-facebook"></i>
+
               Facebook
             </a>
 
             <a
               href="https://www.instagram.com/mohammedsaleh14447/"
               target="_blank"
+              rel="noopener"
             >
               <i class="fa-brands fa-instagram"></i>
+
               Instagram
             </a>
-
           </div>
         </div>
 
         <form class="reveal-right">
-
           <div class="inpts-form">
+            <input type="text" placeholder="Full Name" />
 
-            <input
-              type="text"
-              placeholder="Full Name"
-            />
+            <input type="email" placeholder="Email" />
 
-            <input
-              type="email"
-              placeholder="Email"
-            />
+            <input type="text" placeholder="Phone Number" />
 
-            <input
-              type="text"
-              placeholder="Phone Number"
-            />
+            <input type="text" placeholder="Subject" />
 
-            <input
-              type="text"
-              placeholder="Subject"
-            />
-
-            <textarea
-              rows="10"
-              placeholder="Your Message Here...."
-            ></textarea>
-
+            <textarea rows="10" placeholder="Your Message Here...."></textarea>
           </div>
 
-          <button class="btn" type="submit">
-            Send Message
-          </button>
-
+          <button class="btn" type="submit">Send Message</button>
         </form>
-
       </div>
     </section>
 
-    <script>
-      const header = document.querySelector("header");
-      const links = document.getElementById("links");
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
 
-      window.onscroll = function () {
-        if (this.scrollY >= 50) {
+    <script>
+      /* =====================================================
+         HEADER
+      ===================================================== */
+
+      const header = document.querySelector("header");
+
+      window.addEventListener("scroll", function () {
+        if (window.scrollY >= 50) {
           header.classList.add("active");
         } else {
           header.classList.remove("active");
         }
-      };
+      });
+
+      /* =====================================================
+         MOBILE MENU
+      ===================================================== */
+
+      const links = document.getElementById("links");
 
       function open_close_menu() {
         links.classList.toggle("active");
+        document.body.classList.toggle("menu-open");
       }
 
+      /* =====================================================
+         CLOSE MENU WHEN CLICKING OUTSIDE
+      ===================================================== */
+
+      document.addEventListener("click", function (event) {
+        const menuButton = document.querySelector(".icon_menu");
+
+        const clickedInsideMenu = links.contains(event.target);
+
+        const clickedMenuButton = menuButton.contains(event.target);
+
+        if (
+          links.classList.contains("active") &&
+          !clickedInsideMenu &&
+          !clickedMenuButton
+        ) {
+          links.classList.remove("active");
+          document.body.classList.remove("menu-open");
+        }
+      });
+
+      /* =====================================================
+         REVEAL ANIMATIONS
+      ===================================================== */
+
       const revealElements = document.querySelectorAll(
-        ".reveal,.reveal-left,.reveal-right,.stagger",
+        ".reveal, .reveal-left, .reveal-right, .stagger",
       );
 
       const observer = new IntersectionObserver(
@@ -1725,16 +2350,89 @@
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               entry.target.classList.add("show");
+
+              observer.unobserve(entry.target);
             }
           });
         },
         {
-          threshold: 0.15,
+          threshold: 0.12,
         },
       );
 
       revealElements.forEach((element) => {
         observer.observe(element);
+      });
+
+      /* =====================================================
+         CUSTOM CURSOR
+      ===================================================== */
+
+      const dot = document.querySelector(".cursor-dot");
+      const circle = document.querySelector(".cursor-circle");
+
+      let mouseX = 0;
+      let mouseY = 0;
+
+      let circleX = 0;
+      let circleY = 0;
+
+      window.addEventListener("mousemove", (event) => {
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+
+        dot.style.left = mouseX + "px";
+        dot.style.top = mouseY + "px";
+      });
+
+      function animateCursor() {
+        circleX += (mouseX - circleX) * 0.2;
+        circleY += (mouseY - circleY) * 0.2;
+
+        circle.style.left = circleX - 20 + "px";
+        circle.style.top = circleY - 20 + "px";
+
+        requestAnimationFrame(animateCursor);
+      }
+
+      animateCursor();
+
+      /* =====================================================
+         COLOR SWITCHER
+      ===================================================== */
+
+      const colorOptions = document.getElementById("colorOptions");
+
+      function toggleColors() {
+        colorOptions.classList.toggle("active");
+      }
+
+      function changeColor(color) {
+        document.documentElement.style.setProperty("--main_color", color);
+
+        localStorage.setItem("portfolioColor", color);
+      }
+
+      /* =====================================================
+         SAVE COLOR
+      ===================================================== */
+
+      const savedColor = localStorage.getItem("portfolioColor");
+
+      if (savedColor) {
+        document.documentElement.style.setProperty("--main_color", savedColor);
+      }
+
+      /* =====================================================
+         CLOSE COLOR OPTIONS
+      ===================================================== */
+
+      document.addEventListener("click", function (event) {
+        const switcher = document.querySelector(".color-switcher");
+
+        if (!switcher.contains(event.target)) {
+          colorOptions.classList.remove("active");
+        }
       });
     </script>
   </body>
