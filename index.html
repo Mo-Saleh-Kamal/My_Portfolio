@@ -1689,16 +1689,23 @@
           transform: translateY(40px);
         }
 
-        .reveal-left {
-          transform: translateX(-40px);
+        .reveal-left,
+        .reveal-right {
+          transform: translateY(40px);
         }
 
-        .reveal-right {
-          transform: translateX(40px);
+        .reveal-left.show,
+        .reveal-right.show,
+        .reveal.show {
+          transform: translateY(0);
         }
 
         .stagger > * {
           transform: translateY(30px);
+        }
+
+        .stagger.show > * {
+          transform: translateY(0);
         }
       }
 
